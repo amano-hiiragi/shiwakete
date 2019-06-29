@@ -1,0 +1,16 @@
+<header>
+    <div class="headerbar">
+        <%= link_to "仕分けte", root_path, class: "headerbar_logo" %>
+
+        <nav>
+            <ul class="headerbar_user">
+                <% if logged_in? %>
+                    <li><%= link_to current_user.name, '#' %></li>
+                    <li><%= link_to "Log out", logout_path, method: :delete %></li>
+                <% else %>
+                    <li><%= link_to "ログイン", login_path %></li>
+                <% end %>
+            </ul>
+        </nav>
+    </div>
+</header>
