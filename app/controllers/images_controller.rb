@@ -13,7 +13,7 @@ class ImagesController < ApplicationController
 
     # ready filepath
     fileName = File.basename(url)
-    dirName = "/test/"
+    dirName = "app/assets/images/"
     filePath = dirName + fileName
 
     p fileName
