@@ -4,7 +4,7 @@ class ImagesController < ApplicationController
 
   def dltest
     require "open-uri"
-    require "FileUtils"
+    require "fileutils"
 
     # url = image_params
     url = params[:image_url]
