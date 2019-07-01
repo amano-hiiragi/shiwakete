@@ -2,6 +2,10 @@ class ImagesController < ApplicationController
   def top
   end
 
+  def serach
+    
+  end
+
   def dltest
     require "open-uri"
     require "fileutils"

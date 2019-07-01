@@ -5,8 +5,8 @@ Rails.application.routes.draw do
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
 
-  post  '/dltest',  to: 'images#dltest'
-  # post    'serach',    to: 'images#serach'
+  # post  '/dltest',  to: 'images#dltest'
+  post    'serach',    to: 'images#serach'
 
   resources :users
   resources :account_activations, only: [:edit]

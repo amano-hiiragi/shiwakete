@@ -16,7 +16,7 @@
     </div>
 
     <div class="serchbar">
-        <%= form_with url: dltest_path do |form| %>
+        <%= form_with url: serach_path do |form| %>
             <%= form.text_field :image_url %>
             <%= form.submit "URL入力", class: "btn btn_serch" %>
         <% end %>

@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190629225811) do
+ActiveRecord::Schema.define(version: 20190701085120) do
+
+  create_table "images", force: :cascade do |t|
+    t.string "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["url"], name: "index_images_on_url", unique: true
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
