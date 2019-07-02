@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   delete '/logout',  to: 'sessions#destroy'
 
   # post  '/dltest',  to: 'images#dltest'
-  post    'serach',    to: 'images#serach'
+  post    'serach',     to: 'images#serach'
+  get     'sorting',    to: 'images#sorting'
+  post    'test',       to: 'images#test' 
 
   resources :users
   resources :account_activations, only: [:edit]

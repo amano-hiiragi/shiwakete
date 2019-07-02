@@ -1,0 +1,17 @@
+<% if @image_url %>
+    <%= image_tag @image_url %>
+<% end %>
+
+<% if @tagtagtag.nil? %>
+    <p>tag無し</p>
+    <% else %>
+<% end %>
+
+<%= form_with(scope: :image, url: test_path) do |form| %>
+    <%= form.hidden_field :url, value: @image_url %>
+
+    <%= form.text_field :title_of_work %>
+    <%= form.text_field :character_name %>
+
+    <%= form.submit "仕分けru", class: "btn" %>
+<% end %>
