@@ -1,9 +1,9 @@
 <header>
-    <div class="headerbar">
-        <%= link_to "仕分けte", root_path, class: "headerbar_logo" %>
+    <div class="header-bar">
+        <%= link_to "仕分けte", root_path, class: "header-bar_logo" %>
 
         <nav>
-            <ul class="headerbar_user">
+            <ul class="header-bar_user">
                 <% if logged_in? %>
                     <li><%= link_to current_user.name, '#' %></li>
                     <li><%= link_to "ログアウト", logout_path, method: :delete %></li>
@@ -13,12 +13,5 @@
                 <% end %>
             </ul>
         </nav>
-    </div>
-
-    <div class="serchbar">
-        <%= form_with(scope: :image, url: serach_path) do |form| %>
-            <%= form.text_field :url %>
-            <%= form.submit "URL入力", class: "btn btn_serch" %>
-        <% end %>
     </div>
 </header>

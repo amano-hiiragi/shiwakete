@@ -1,10 +1,13 @@
-<% if @image_url %>
-    <%= image_tag @image_url %>
+<% if @image_url.nil? %>
+    <p>image無し</p>
+<% else %>
+    <%= image_tag @image_url, class: "serach-result_img"%>
 <% end %>
 
-<% if @tagtagtag.nil? %>
+<% if @image_url.nil? %>
     <p>tag無し</p>
-    <% else %>
+<% else %>
+    <p><%= @image_title %>,<%= @image_character %></p>
 <% end %>
 
 <%= form_with(scope: :image, url: test_path) do |form| %>
