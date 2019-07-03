@@ -6,8 +6,6 @@ class CreateImageCharacters < ActiveRecord::Migration[5.1]
 
       t.timestamps
     end
-    add_index :image_characters, :image
-    add_index :image_characters, :character
-    add_index :image_characters, [:image, :character], unique: true
+    add_index :image_characters, [:image_id, :character_id], unique: true
   end
 end

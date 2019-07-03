@@ -25,10 +25,8 @@ ActiveRecord::Schema.define(version: 20190702052118) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["character_id"], name: "index_image_characters_on_character_id"
+    t.index ["image_id", "character_id"], name: "index_image_characters_on_image_id_and_character_id", unique: true
     t.index ["image_id"], name: "index_image_characters_on_image_id"
-    t.index [nil, nil], name: "index_image_characters_on_image_and_character", unique: true
-    t.index [nil], name: "index_image_characters_on_character"
-    t.index [nil], name: "index_image_characters_on_image"
   end
 
   create_table "image_titles", force: :cascade do |t|
@@ -36,11 +34,9 @@ ActiveRecord::Schema.define(version: 20190702052118) do
     t.integer "title_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["image_id", "title_id"], name: "index_image_titles_on_image_id_and_title_id", unique: true
     t.index ["image_id"], name: "index_image_titles_on_image_id"
     t.index ["title_id"], name: "index_image_titles_on_title_id"
-    t.index [nil, nil], name: "index_image_titles_on_image_and_title", unique: true
-    t.index [nil], name: "index_image_titles_on_image"
-    t.index [nil], name: "index_image_titles_on_title"
   end
 
   create_table "images", force: :cascade do |t|

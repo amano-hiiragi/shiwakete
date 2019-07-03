@@ -1,7 +1,47 @@
 // sorting
-.serach-result_img {
-    max-height: 100px;
-    max-width: 200px;
+
+// new用
+.sorting_img {
+    max-height: 200px;
+    max-width: 400px;
     height: auto;
     width: auto;
+    border-radius: 10px;
+    margin-bottom: 5px;
 }
+
+.sorting {
+    padding: 10px;
+    border-radius: 10px; 
+    background-color: #a9a9a9;
+
+    .sorting_img {
+        max-height: 200px;
+        max-width: 400px;
+        height: auto;
+        width: auto;
+        border-radius: 10px;
+        margin-bottom: 5px;
+    }
+
+    .sorting_tag form {
+        display: flex;
+        padding: 10px;
+        border-radius: 10px; 
+        background-color: #2c2c2c;
+        .titles {
+            .title {
+                margin-top: 5px;
+            }
+        }
+        .characters {
+            .character {
+                margin-top: 5px;
+            }
+        }
+        .btn_prime {
+            margin: auto;
+        }
+    }
+}
+

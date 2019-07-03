@@ -6,8 +6,6 @@ class CreateImageTitles < ActiveRecord::Migration[5.1]
 
       t.timestamps
     end
-    add_index :image_titles, :image
-    add_index :image_titles, :title
-    add_index :image_titles, [:image, :title], unique: true
+    add_index :image_titles, [:image_id, :title_id], unique: true
   end
 end

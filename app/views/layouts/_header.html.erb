@@ -5,7 +5,7 @@
         <nav>
             <ul class="header-bar_user">
                 <% if logged_in? %>
-                    <li><%= link_to current_user.name, '#' %></li>
+                    <li><%= link_to current_user.name, current_user%></li>
                     <li><%= link_to "ログアウト", logout_path, method: :delete %></li>
                 <% else %>
                     <li><%= link_to "ログイン", login_path %></li>

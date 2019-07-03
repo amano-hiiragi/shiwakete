@@ -1,20 +1,73 @@
-<% if @image_url.nil? %>
-    <p>image無し</p>
-<% else %>
-    <%= image_tag @image_url, class: "serach-result_img"%>
+<% if @newImage %>
+    <%= image_tag @newImage.url, class: "sorting_img"%>
+    test新規
+    <p>新規urlの為tag無し</p>
+
+    <%= form_with(scope: :image, url: record_path) do |form| %>
+        <%= form.hidden_field :url, value: @newImage.url %>
+
+        <%= form.text_field :title_of_work %>
+        <%= form.text_field :character_name %>
+
+        <%= form.submit "仕分けru", class: "btn" %>
+    <% end %>
 <% end %>
 
-<% if @image_url.nil? %>
-    <p>tag無し</p>
-<% else %>
-    <p><%= @image_title %>,<%= @image_character %></p>
-<% end %>
 
-<%= form_with(scope: :image, url: test_path) do |form| %>
-    <%= form.hidden_field :url, value: @image_url %>
 
-    <%= form.text_field :title_of_work %>
-    <%= form.text_field :character_name %>
+<% if @alreadyImage %>
+    <div class="sorting">
+        <%= image_tag @alreadyImage.url, class: "sorting_img"%>
 
-    <%= form.submit "仕分けru", class: "btn" %>
+        <div class="sorting_tag">
+            <%= form_with(scope: :image, url: record_path) do |form| %>
+                <%= form.hidden_field :id, value: @alreadyImage.id %>
+                
+                <div class="titles">
+                    <p>作品名</p>
+                    <% @titles.each do |title| %>
+                        <div class="title">
+                            <label><%= form.radio_button :title_of_work,
+                                        title.title_of_work %><%=  title.title_of_work %></label>
+                        </div>
+                    <% end %>
+                </div>
+
+                <div class="characters">
+                    <p>キャラクター名</p>
+                    <% @characters.each do |character| %>
+                        <div class="character">
+                            <label><%= form.radio_button    :character_name,
+                                                            character.character_name %><%=  character.character_name %></label>
+                        </div>
+                    <% end %>
+                </div>
+
+                <%= form.submit "仕分けte", class: "btn_prime" %>
+
+            <% end %>
+        </div>
+    </div>
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+    <%= form_with(scope: :image, url: record_path) do |form| %>
+        <%= form.hidden_field :id, value: @alreadyImage.id %>
+
+        <%= form.text_field :title_of_work %>
+        <%= form.text_field :character_name %>
+
+        <%= form.submit "仕分けru", class: "btn" %>
+    <% end %>
 <% end %>
