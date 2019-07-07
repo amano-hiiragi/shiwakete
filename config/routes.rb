@@ -5,12 +5,18 @@ Rails.application.routes.draw do
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
 
-  post    'serach',     to: 'images#serach'
-  get     'sorting',    to: 'images#sorting'
+  post    '/serach',     to: 'images#serach'
+  get     '/sorting',    to: 'images#sorting'
 
-  post    'record',     to: 'images#record'
+  post    '/record',     to: 'images#record'
+  post    '/newrecord', to: 'images#newrecord'
+  post    '/addrecordtest',  to: 'images#addrecordtest'
 
-  post    'test',       to: 'images#test' 
+  post    '/test',       to: 'images#test'
+
+  post    '/tagset/:id',     to: 'users#tagset'
+
+  get     '/images/index',    to: 'images#index'
 
   resources :users
   resources :account_activations, only: [:edit]

@@ -1,5 +1,13 @@
 class ImagesController < ApplicationController
+
+  #alreadey = dbにsave済
+  #
+
   def top
+  end
+
+  def index
+    @images = Image.all
   end
 
   def serach
@@ -12,7 +20,7 @@ class ImagesController < ApplicationController
       redirect_to sorting_path(image_id: alreadyImage)
     else
       p "しない = 新規image"
-      redirect_to sorting_path(newImage_url: image_url)
+      redirect_to sorting_path(new_image_url: image_url)
     end
   end
 
@@ -21,6 +29,9 @@ class ImagesController < ApplicationController
     #画像urlでない場合saveしないこと
 
     #既存image
+
+    @test = current_user
+
     if params[:image_id]
       @alreadyImage = Image.find(params[:image_id])
 
@@ -33,54 +44,32 @@ class ImagesController < ApplicationController
     end
 
     #新規url
-    if params[:newImage_url]
-      @newImage = Image.new(url: params[:newImage_url])
+    if params[:new_image_url]
+      @newImage = Image.new(url: params[:new_image_url])
     end
   end
 
-
-
-
   def record
-    #既存imgか新規imgか
 
-      #既存image
-      if image_params[:id]
-        image = Image.find(image_params[:id])
-        p image
+        image = Image.find(params[:image][:alreadey_image_id])
+        p "既存img"
 
-        #tag既存か新規
-
-          #all新規
-          title = Title.new(for_title_params)
-          p title
-          character = Character.new(for_character_params)
-          p character
+    render 'sorting'
+  end
 
 
-          p "save"
-          title.save
-          character.save
+  def newrecord
+    #完全新規img
+    image = Image.new(image_params)
+    title = Title.new(for_title_params)
+    character = Character.new(for_character_params)
 
-          p "create"
-          image.image_titles.create(title_id: title.id)
-          image.image_characters.create(character_id: character.id)
+    image.save
+    title.save
+    character.save
 
-      end
-
-      #新規img
-      if image_params[:url]
-        image = Image.new(url: image_params[:url])
-        title = Title.new(for_title_params)
-        character = Character.new(for_character_params)
-
-        image.save
-        title.save
-        character.save
-
-        image.image_titles.create(title_id: title.id)
-        image.image_characters.create(character_id: character.id)
-      end
+    image.image_titles.create(title_id: title.id)
+    image.image_characters.create(character_id: character.id)
 
     #DL未完
 
@@ -113,53 +102,38 @@ class ImagesController < ApplicationController
     render 'sorting'
   end
 
+  def addrecordtest
+    image = Image.find(params[:image][:id])
+    title = Title.find_by(title_of_work: params[:image][:recorded_title])
+    character = Character.find_by(character_name: params[:image][:recorded_character])
 
+        #DL未完
 
-
-
-
-  def test
-    p "---"
-    p params
-    p params[:image]
-    p params[:image][:url]
-    p params[:image][:title_of_work]
-    p params[:image][:character_name]
-    p "---"
-
-    p "___________"
-    p image_params
-    p for_title_params
-    p for_character_params
-    p "___________"
-
-    # ready filepath
-    require "open-uri"
-    require "fileutils"
-
-    fileName = File.basename(url)
-    dirName = Rails.root.join("app/assets/images/")
-    filePath = dirName + fileName
-
-    p fileName
-    p dirName
-    p filePath
-
-    #dir無かったら作成する
-    FileUtils.mkdir_p(dirName) unless FileTest.exist?(dirName)
-
-    #ひとまずrails内には保存出来た
-    open(filePath, 'wb') do |output|
-      open(url) do |data|
-        output.write(data.read)
-      end
-    end
-
-    send_file(filePath, filename: "test")
-    #読まない
-    # send_file(image.url)
-
-
+       # ready filepath
+       require "open-uri"
+       require "fileutils"
+   
+       fileName = File.basename(image.url)
+       dirName = Rails.root.join("app/assets/images/add/test/hoge/#{title.title_of_work}/#{character.character_name}/")
+       filePath = dirName + fileName
+   
+       p fileName
+       p dirName
+       p filePath
+   
+       #dir無かったら作成する
+       FileUtils.mkdir_p(dirName) unless FileTest.exist?(dirName)
+   
+       #ひとまずrails内には保存出来た
+       open(filePath, 'wb') do |output|
+         open(image.url) do |data|
+           output.write(data.read)
+         end
+       end
+   
+       send_file(filePath, filename: "test")
+       #読まない
+       # send_file(image.url)
 
     render 'sorting'
   end
@@ -167,13 +141,11 @@ class ImagesController < ApplicationController
   private
 
   def image_params
-    params.require(:image).permit(:id, :url)
+    params.require(:image).permit(:url)
   end
-
   def for_title_params
     params.require(:image).permit(:title_of_work)
   end
-
   def for_character_params
     params.require(:image).permit(:character_name)
   end
