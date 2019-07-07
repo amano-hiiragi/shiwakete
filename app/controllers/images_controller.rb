@@ -95,14 +95,10 @@ class ImagesController < ApplicationController
          end
        end
    
-       send_file(filePath, filename: "test")
-       #読まない
-       # send_file(image.url)
-
-    render 'sorting'
+       redirect_to images_success_path
   end
 
-  def addrecordtest
+  def dlonlytest
     image = Image.find(params[:image][:id])
     title = Title.find_by(title_of_work: params[:image][:recorded_title])
     character = Character.find_by(character_name: params[:image][:recorded_character])
@@ -135,7 +131,7 @@ class ImagesController < ApplicationController
        #読まない
        # send_file(image.url)
 
-    render 'sorting'
+       redirect_to images_success_path
   end
 
   private

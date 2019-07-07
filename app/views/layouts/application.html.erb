@@ -10,27 +10,15 @@
 
   <body>
     <%= render 'layouts/header' %>
-    <div class="wrap">
 
+    <main class="main_wrap">
+        <%= render 'layouts/seracher' %>
 
+        <%= yield %>
+        
+    <main>
 
-      <main>
-        <div class="main_wrap">
-
-          <div class="serch-bar">
-            <%= form_with(scope: :image, url: serach_path) do |form| %>
-                <%= form.text_field :url %>
-                <%= form.submit "URL入力", class: "btn btn_serch" %>
-            <% end %>
-          </div>
-
-          <%= yield %>
-          
-        </div>
-      <main>
-
-      <%= debug(params) if Rails.env.development? %>
+    <%= debug(params) if Rails.env.development? %>
       
-    </div>
   </body>
 </html>

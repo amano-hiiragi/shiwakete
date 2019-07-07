@@ -1,81 +1,109 @@
-<% if @newImage %>
-    <%= image_tag @newImage.url, class: "sorting_img"%>
-    testimg新規
+<div class="firstview">
+    <% if @newImage %>
+        <div class="sorting-img_frame">
+            <%= image_tag @newImage.url, class: "sorting-img"%>
+        </div>
 
-    test新規urlの為tag無し
-    <%= form_with(scope: :image, url: newrecord_path) do |form| %>
-        <%= form.hidden_field :url, value: @newImage.url %>
+        <%= form_with(scope: :image, url: newrecord_path) do |form| %>
+            <div class="sorting_tag">
+                <%= form.hidden_field :url, value: @newImage.url %>
 
-        <%= form.text_field :title_of_work %>
-        <%= form.text_field :character_name %>
+                <%= form.label :"作品名", class: 'form-label' %>
+                <%= form.text_field :title_of_work, class: 'form-text' %>
 
-        <%= form.submit "仕分けru", class: "btn" %>
+                <%= form.label :"キャラクター名", class: 'form-label' %> 
+                <%= form.text_field :character_name, class: 'form-text' %>
+
+                <%= form.submit "仕分けru", class: "btn_prime" %>
+
+            </div>
+        <% end %>
     <% end %>
-<% end %>
 
 
 
-<% if @alreadyImage %>
-    <div class="sorting">
-        <%= image_tag @alreadyImage.url, class: "sorting_img"%>
+    <% if @alreadyImage %>
+        <div class="sorting-img_frame">
+            <%= image_tag @alreadyImage.url, class: "sorting-img"%>
+        </div>
 
-        <%= form_with(scope: :image, url: addrecordtest_path) do |form| %>
+        <%= form_with(scope: :image, url: dlonlytest_path) do |form| %>
             <div class="sorting_tag">
                 <%= form.hidden_field :id, value: @alreadyImage.id %>
                 
                 <div class="titles">
                     <p>作品名</p>
-                    <% @titles.each do |title| %>
-                        <div class="title">
-                            <label><%= form.radio_button :recorded_title,
-                                        title.title_of_work %><%=  title.title_of_work %></label>
-                        </div>
+                    <% @titles.each_with_index do |title, i| %>
+
+                        <% if i == 0 %>
+                            <div class="title">
+                                <%= form.radio_button :recorded_title, title.title_of_work,
+                                            {checked: true, id: "test"}%><label for="test"><%=  title.title_of_work %></label>
+                            </div>
+
+                        <% else %>
+                            <div class="title">
+                                <%= form.radio_button :recorded_title,
+                                            title.title_of_work %><label><%=  title.title_of_work %></label>
+                            </div>
+                        <% end %>
                     <% end %>
                 </div>
 
                 <div class="characters">
                     <p>キャラクター名</p>
-                    <% @characters.each do |character| %>
-                        <div class="character">
-                            <label><%= form.radio_button    :recorded_character,
-                                                            character.character_name %><%=  character.character_name %></label>
-                        </div>
+                    <% @characters.each_with_index do |character, i| %>
+
+                        <% if i == 0 %>
+                            <div class="character">
+                                <%= form.radio_button    :recorded_character,
+                                                                character.character_name,
+                                                                {checked: true}%><label><%=  character.character_name %></label>
+                            </div>
+
+                        <% else %>
+                                <%= form.radio_button    :recorded_character,
+                                        character.character_name %><label><%=  character.character_name %></label>
+                        <% end %>
                     <% end %>
                 </div>
-
+                <%= form.submit "仕分けte", class: "btn_prime" %>
             </div>
-
-            <%= form.submit "仕分けte", class: "btn_prime" %>
         <% end %>
-    </div>
-<% end %>
 
-<% if @test %>
-    登録済みの表示
-    <hr>
-    <%= @test.user_tags%>
-    <hr>
-    <%= @test.name%>
-        <% @test.user_tags.each do |tag|%>
-            <h1>
-                <%= tag.title_of_work%>
-            </h1>
-            
-            <h1>
-                <%= tag.character_name%>
-            </h1>
-        <% end %>
-<% end %>
+        test
+        addtag
+        新規?既存?
+        
+    <% end %>
+
+    <% if @test %>
+        登録済みの表示
+        <hr>
+        <%= @test.user_tags%>
+        <hr>
+        <%= @test.name%>
+            <% @test.user_tags.each do |tag|%>
+                <h1>
+                    <%= tag.title_of_work%>
+                </h1>
+                
+                <h1>
+                    <%= tag.character_name%>
+                </h1>
+            <% end %>
+    <% end %>
 
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+</div>

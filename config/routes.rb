@@ -10,13 +10,15 @@ Rails.application.routes.draw do
 
   post    '/record',     to: 'images#record'
   post    '/newrecord', to: 'images#newrecord'
-  post    '/addrecordtest',  to: 'images#addrecordtest'
+  post    '/dlonlytest',  to: 'images#dlonlytest'
 
   post    '/test',       to: 'images#test'
 
   post    '/tagset/:id',     to: 'users#tagset'
 
   get     '/images/index',    to: 'images#index'
+
+  get     '/images/success', to: 'images#success'
 
   resources :users
   resources :account_activations, only: [:edit]

@@ -1,14 +1,22 @@
- <h1><%= @user.name %></h1>
- <p>Tag</p>
-    <%= @user.user_tags.each do |tag|%>
-        <%= tag.title_of_work%>
-        <%= tag.character_name%>
-    <% end %>
+ <div class="firstview">
+    <div class="backs">
+        <h1 class="back"><%= @user.name %> さん</h1>
+    </div>
 
-     <%= form_with(url: "/tagset/#{@user.id}") do |form| %>
-        <%= form.text_field :title_of_work %>
-        <%= form.text_field :character_name %>
+    <p>仕分けruの設定</p>
+        作品名とキャラクター名
+        <% @user.user_tags.each do |tag|%>
+            <%= tag.title_of_work%>
+            <%= tag.character_name%>
+        <% end %>
 
-        <%= form.submit "作成", class: "btn" %>
-    <% end %>
- <%= link_to '> アカウント設定', edit_user_path(current_user) %>
+        <%= form_with(url: "/tagset/#{@user.id}") do |form| %>
+            <%= form.text_field :title_of_work %>
+            <%= form.text_field :character_name %>
+
+            <%= form.submit "作成", class: "btn" %>
+        <% end %>
+
+    仕分けた画像一覧
+    <%= link_to '> アカウント設定', edit_user_path(current_user) %>
+</div>
