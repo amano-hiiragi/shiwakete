@@ -5,18 +5,18 @@ Rails.application.routes.draw do
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
 
+  #作成中
   post    '/serach',     to: 'images#serach'
   get     '/sorting',    to: 'images#sorting'
 
-  post    '/record',     to: 'images#record'
-  post    '/newrecord', to: 'images#newrecord'
+  post    '/newimagerecord', to: 'images#newimagerecord'
   post    '/dlonlytest',  to: 'images#dlonlytest'
+  post    '/addrecord',   to: 'images#addrecord'
 
-  post    '/test',       to: 'images#test'
+  get     '/test',        to: 'images#ssend'
 
+  #作成予定
   post    '/tagset/:id',     to: 'users#tagset'
-
-  get     '/images/index',    to: 'images#index'
 
   get     '/images/success', to: 'images#success'
 
