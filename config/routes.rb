@@ -9,9 +9,7 @@ Rails.application.routes.draw do
   post    '/serach',     to: 'images#serach'
   get     '/sorting',    to: 'images#sorting'
 
-  post    '/newimagerecord', to: 'images#newimagerecord'
-  post    '/dlonlytest',  to: 'images#dlonlytest'
-  post    '/addrecord',   to: 'images#addrecord'
+  post    '/record', to: 'images#record'
 
   get     '/test',        to: 'images#ssend'
 

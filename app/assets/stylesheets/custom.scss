@@ -33,22 +33,30 @@ a {
 .searcher {
     padding-top: 20px; 
     padding-bottom: 15px;
-    font-size: 0; /*inline-blockの隙間用*/
-    input[type="text"] {
+    font-size: 0;
+    .normal {
         width: 50%;
         height: 30px;
         box-sizing: border-box;
+    }
+    .background {
+        width: 50%;
+        height: 30px;
+        box-sizing: border-box;
+        background-color: #4a4a4a;
+        border: 2px solid #656565;
     }
     .btn_serch {
         height: 30px;
         box-sizing: border-box;
         color: #cccccc;
         background: #4a4a4a;
-        border-color: #656565;
+        border-top: 2px solid #656565;
+        border-right: 2px solid #656565;
+        border-bottom: 2px solid #656565;
+        border-left: none;
     }
 }
-
-
 
 .main_wrap {
     max-width: 800px;

@@ -45,18 +45,53 @@ class ImagesController < ApplicationController
     end
   end
 
-  def newimagerecord
-    #完全新規img
-    image = Image.new(image_params)
-    title = Title.new(for_title_params)
-    character = Character.new(for_character_params)
+  def record
+    if image_params[:id]
+      image = Image.find(image_params[:id])
+    else
+      #同時にnewimageとしてsortingに入ってた場合save済みになるかも
+      if image = Image.find_by(url: image_params[:url])
+        p "既存かsorting中に誰か完了した"
+      else
+        p "新規"
+        image = Image.new(image_params)
+        image.save
+      end
+    end
 
-    image.save
-    title.save
-    character.save
+    #tagは新規?既存?
+    if title = Title.find_by(title_of_work: for_title_params[:title_of_work])
+      p "既存?"
+      p "関連済みでダブりは?"
+      if image.image_titles.find_by(title_id: title.id)
+        p "ダブってるからcreate無し"
+      else
+        p "無いからcreate"
+        image.image_titles.create(title_id: title.id)
+      end
+    else
+      p "新規"
+      title = Title.new(for_title_params)
+      title.save
+      image.image_titles.create(title_id: title.id)
+    end
 
-    image.image_titles.create(title_id: title.id)
-    image.image_characters.create(character_id: character.id)
+    if character = Character.find_by(character_name: for_character_params[:character_name])
+      p "既存?"
+      p "関連済みでダブりは?"
+      if image.image_characters.find_by(character_id: character.id)
+        p "ダブってるからcreate無し"
+      else
+        p "無いからcreate"
+        image.image_characters.create(character_id: character.id)
+      end
+    else
+      p "新規"
+      character = Character.new(for_character_params)
+      character.save
+      image.image_characters.create(character_id: character.id)
+    end
+
 
     #DL未完
 
@@ -82,80 +117,24 @@ class ImagesController < ApplicationController
          end
        end
    
-       redirect_to images_success_path
+       redirect_to test_path(image_url: image.url,
+                                        title_of_work: title.title_of_work,
+                                        character_name: character.character_name)
   end
 
-  def dlonlytest
-    image = Image.find(image_params[:id])
-    title = Title.find_by(title_of_work: for_title_params[:title_of_work])
-    character = Character.find_by(character_name: for_character_params[:character_name])
-    p title
-    p character
-
-        #DL未完
-
-       # ready filepath
-       require "open-uri"
-       require "fileutils"
-   
-       fileName = File.basename(image.url)
-       dirName = Rails.root.join("app/assets/images/add/test/hoge/#{title.title_of_work}/#{character.character_name}/")
-       filePath = dirName + fileName
-   
-       p fileName
-       p dirName
-       p filePath
-   
-       #dir無かったら作成する
-       FileUtils.mkdir_p(dirName) unless FileTest.exist?(dirName)
-   
-       #ひとまずrails内には保存出来た
-       open(filePath, 'wb') do |output|
-         open(image.url) do |data|
-           output.write(data.read)
-         end
-       end
-   
-       send_file(filePath, filename: "test")
-       #読まない
-       # send_file(image.url)
-
-       redirect_to images_success_path
-  end
-
-  def addrecord
-    image = Image.find(image_params[:id])
-    # title既存?
-    if title = Title.find_by(title_of_work: for_title_params[:title_of_work])
-      p title
-      p "???"
-    else
-      p title
-      p "funifuni"
-      title = Title.new(title_of_work: for_title_params[:title_of_work])
-      title.save
-      image.image_titles.create(title_id: title.id)
-    end
-
-    if character = Character.find_by(character_name: for_character_params[:character_name])
-      p character
-      p "???"
-    else
-      p character
-      p "funifuni"
-      character = Character.new(character_name: for_character_params[:character_name])
-      character.save
-      image.image_characters.create(character_id: character.id)
-    end
-
-    redirect_to images_success_path
+  def success
+    @image_url = params[:image_url]
+    @title_of_work =  params[:title_of_work]
+    @character_name = params[:character_name]
   end
 
   def ssend
-    file_name="D-KlnvHUcAA5ZQM.jpg"
-    filepath = Rails.root.join('app/assets/images/add/test/hoge/デレマス/小関麗奈/',file_name)
-    stat = File::stat(filepath)
-    send_file(filepath, :filename => file_name, :length => stat.size)
+    require "open-uri"
+
+    image_url = params[:image_url]
+    file_name = "#{params[:title_of_work]}-#{params[:character_name]}"
+
+    send_file(open(image_url), filename: file_name)
   end
 
   private
@@ -164,9 +143,9 @@ class ImagesController < ApplicationController
     params.require(:image).permit(:id, :url)
   end
   def for_title_params
-    params.require(:image).permit(:title_of_work)
+    params.require(:title).permit(:title_of_work)
   end
   def for_character_params
-    params.require(:image).permit(:character_name)
+    params.require(:character).permit(:character_name)
   end
 end
