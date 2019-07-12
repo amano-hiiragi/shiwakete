@@ -43,14 +43,14 @@
 
 
     <% if @alreadyImage %>
-        <div class="firstview">
+        <div class="firstview_on_second">
 
             <div class="sorting-img_frame">
                 <%= image_tag @alreadyImage.url, class: "sorting-img"%>
             </div>
 
             <%= form_with(url: record_path) do |form| %>
-                <div class="sorting_already">
+                <div class="tag_frame">
                     <div class="sorting_tag">
                         <%= form.fields_for :image do |img| %>
                             <%= img.hidden_field :id, value: @alreadyImage.id %>
@@ -112,54 +112,73 @@
         </div>
 
 
-        <% if @user %>
-            <%= form_with(scope: :image, url: addrecord_path) do |form| %>
-                <div class="sorting_tag">
-                    <%= form.hidden_field :id, value: @alreadyImage.id %>
+        <div class="secondview">
+            <%= form_with(url: record_path) do |form| %>
+                <%= form.fields_for :image do |img| %>
+                    <%= img.hidden_field :id, value: @alreadyImage.id %>
+                <% end %>
 
-                    <div class="titles">
-                        <p>作品名</p>
-                        <% @user.user_tags.each_with_index do |title, i| %>
-
-                            <% if i == 0 %>
-                                <div class="title">
-                                    <%= form.radio_button :title_of_work, title.title_of_work,
-                                                {checked: true, id: "test"}%><label for="test"><%=  title.title_of_work %></label>
-                                </div>
-
-                            <% else %>
-                                <div class="title">
-                                    <%= form.radio_button :title_of_work,
-                                                title.title_of_work %><label><%=  title.title_of_work %></label>
+                <div class="tag_frame_second">
+                    <div class="sorting_tag">
+                        <div class="titles testtest">
+                            <p>作品名</p>
+                            <%= form.fields_for :title do |t| %>
+                                <% if @user %>
+                                    <% @user.user_tags.each_with_index do |title, i| %>
+                                        <% if i == 0 %>
+                                            <div class="title test">
+                                                <%= t.radio_button :title_of_work, title.title_of_work,
+                                                        {   checked: true, id: "_title_tgl_ru#{i}",
+                                                            class: "none-display"}%>
+                                                <%= t.label(:tgl, title.title_of_work, value: "ru#{i}") %>
+                                            </div>
+                                        <% else %>
+                                            <div class="title test">
+                                                <%= t.radio_button :title_of_work, title.title_of_work,
+                                                        {   id: "_title_tgl_ru#{i}",
+                                                            class: "none-display"}%>
+                                                <%= t.label(:tgl, title.title_of_work, value: "ru#{i}") %>
+                                            </div>
+                                        <% end %>
+                                    <% end %>
+                                <% end%>
+                                <div class="title test">
+                                    <%= t.text_field :title_of_work, class: 'form-text' %>
                                 </div>
                             <% end %>
-                        <% end %>
+                        </div>
 
-                    </div>
-
-                    <div class="characters">
-                        <p>キャラクター名</p>
-                        <% @user.user_tags.each_with_index do |character, i| %>
-
-                            <% if i == 0 %>
-                                <div class="character">
-                                    <%= form.radio_button    :character_name,
-                                                                    character.character_name,
-                                                                    {checked: true}%><label><%=  character.character_name %></label>
+                        <div class="characters testtest">
+                            <p>キャラクター名</p>
+                            <%= form.fields_for :character do |c| %>
+                                <% @user.user_tags.each_with_index do |character, i| %>
+                                    <% if i == 0 %>
+                                        <div class="character test">
+                                            <%= c.radio_button    :character_name, character.character_name,
+                                                    {   checked: true, id: "_character_tgl_ru#{i}",
+                                                        class: "none-display"}%>
+                                            <%= c.label(:tgl, character.character_name, value: "ru#{i}") %>
+                                        </div>
+                                    <% else %>
+                                        <div class="character test">
+                                            <%= c.radio_button    :character_name, character.character_name,
+                                                    {   id: "_character_tgl_ru#{i}",
+                                                        class: "none-display"}%>
+                                            <%= c.label(:tgl, character.character_name, value: "ru#{i}") %>
+                                        </div>
+                                    <% end %>
+                                <% end %>
+                                <div class="character test">
+                                    <%= c.text_field :character_name, class: 'form-text' %>
                                 </div>
-
-                            <% else %>
-                                    <%= form.radio_button    :character_name,
-                                            character.character_name %><label><%=  character.character_name %></label>
                             <% end %>
-                        <% end %>
+                        </div>
                     </div>
 
-                    <%= form.submit "仕分けru", class: "btn_prime" %>
-
+                    <%= form.submit "仕分けru", class: "btn_second" %>
                 </div>
-            <% end %>
-        <% end%>
+            <% end%>
+        </div>
 
     <% end %>
 
