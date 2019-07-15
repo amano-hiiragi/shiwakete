@@ -1,3 +1,16 @@
-// Place all the styles related to the Users controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.form_area {
+    width: 400px;
+    padding: 10px;
+    border-radius: 10px; 
+    background-color: #181818;
+    border: 1px solid #cccccc;
+    margin: 15px auto 0 auto;
+}
+
+.form_item {
+    display: block
+}
+
+.form_item + .form_item {
+margin-top: 10px;
+}

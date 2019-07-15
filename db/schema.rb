@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190707005435) do
+ActiveRecord::Schema.define(version: 20190715123000) do
 
   create_table "characters", force: :cascade do |t|
     t.string "character_name"
@@ -47,8 +47,8 @@ ActiveRecord::Schema.define(version: 20190707005435) do
   end
 
   create_table "sortings", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "image_id"
+    t.integer "user_id", null: false
+    t.integer "image_id", null: false
     t.integer "title_id"
     t.integer "character_id"
     t.datetime "created_at", null: false

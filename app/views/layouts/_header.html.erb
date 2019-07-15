@@ -1,4 +1,4 @@
-<header>
+<header class="header">
     <div class="header-bar">
         <%= link_to "仕分けte", root_path, class: "header-bar_logo" %>
 
@@ -9,7 +9,7 @@
                     <li><%= link_to "ログアウト", logout_path, method: :delete %></li>
                 <% else %>
                     <li><%= link_to "ログイン", login_path %></li>
-                    <li><%= link_to "新規登録", signup_path %><li>
+                    <li><%= link_to "ユーザー登録", signup_path %><li>
                 <% end %>
             </ul>
         </nav>

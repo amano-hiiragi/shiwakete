@@ -2,17 +2,26 @@
     padding: 10px;
     border-radius: 10px; 
     background-color: #777777;
+    margin-top: 15px;
 }
 
 .firstview_on_second {
     padding: 10px;
     border-radius: 10px 10px 0 0; 
     background-color: #777777;
+    margin-top: 15px;
 }
 .secondview {
     padding: 10px;
     border-radius: 0 0 10px 10px; 
     background-color: #3b3b3b;
+}
+
+.quietview{
+    padding: 10px;
+    border-radius: 10px; 
+    background-color: #000000;
+    margin-top: 15px;
 }
 
 // top
@@ -95,55 +104,28 @@
     padding: 10px;
     cursor: pointer;
 }
-
-
 [id*="tgl"]:hover + label {
     color: #FFFFFF;
 }
-
 [id*="tgl"]:checked + label {
     color: #FFFFFF;
     background: #000000;
     border-left: 10px solid #fd7e00;
 }
 
-
-.btn_prime {
+[id*="tgl2"] + label {
     display: block;
-    max-width: 180px;
-    border: 2px solid #6a6a6a;
-    font-size: 16px;
-    color: #FFFFFF;
-    text-decoration: none;
-    font-weight: bold;
-    padding: 8px 16px;
-    margin: auto;
-    border-radius: 4px;
-    transition: .4s;
-    background-color: #fd7e00;
+    border-left: 10px solid #292929;
+    padding: 10px;
+    cursor: pointer;
 }
-  .btn_prime:hover {
-    background-color: #2c2c2c;
-    border-color: #e5e5e5;
+[id*="tgl2"]:hover + label {
     color: #FFFFFF;
+}
+[id*="tgl2"]:checked + label {
+    color: #FFFFFF;
+    background: #000000;
+    border-left: 10px solid #000080;
 }
 
-.btn_second {
-    display: block;
-    max-width: 180px;
-    border: 2px solid #000000;
-    font-size: 16px;
-    color: #cccccc;
-    text-decoration: none;
-    font-weight: bold;
-    padding: 8px 16px;
-    margin: auto;
-    border-radius: 4px;
-    transition: .4s;
-    background-color: #000080;
-}
-  .btn_second:hover {
-    background-color: #2c2c2c;
-    border-color: #e5e5e5;
-    color: #FFFFFF;
-}
+

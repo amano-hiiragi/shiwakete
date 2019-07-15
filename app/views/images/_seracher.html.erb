@@ -1,6 +1,6 @@
 <div class="searcher">
     <%= form_with(scope: :image, url: serach_path) do |form| %>
-        <%= form.text_field :url, class: yield(:seracher_type) %>
+        <%= form.text_field :url, class: yield(:seracher_type), value: yield(:seracher_url)%>
         <%= form.submit "URL入力", class: "btn btn_serch" %>
     <% end %>
 </div>

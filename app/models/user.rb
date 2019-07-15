@@ -11,6 +11,9 @@ class User < ApplicationRecord
     validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
     has_many :user_tags, dependent: :destroy
+    has_many :sortings, dependent: :destroy
+    
+    has_many :images, through: :sortings
 
     # 渡された文字列のハッシュ値を返す
     def self.digest(string)

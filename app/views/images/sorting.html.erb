@@ -1,4 +1,5 @@
 <% provide(:seracher_type, 'background') %>
+<% provide(:seracher_url, 'url')%>
 <%= render 'seracher' %>
 
 <% if @newImage %>
@@ -7,35 +8,74 @@
             <%= image_tag @newImage.url, class: "sorting-img"%>
         </div>
 
-                    image未登録 = 仕分けru表示
-        <%= form_with(url: record_path) do |form| %>
-            <div class="sorting_already">
-                <div class="sorting_tag">
-                    <%= form.fields_for :image do |img| %>
-                        <%= img.hidden_field :url, value: @newImage.url %>
-                    <% end %>
+         <%= form_with(url: record_path) do |form| %>
+                <%= form.fields_for :image do |img| %>
+                    <%= img.hidden_field :url, value: @newImage.url %>
+                <% end %>
 
-                        <%= form.fields_for :title do |t| %>
-                            <div class="titles testtest">
-                                <p>作品名</p>
+                <div class="tag_frame">
+                    <div class="sorting_tag">
+                        <div class="titles testtest">
+                            <p>作品名</p>
+                            <%= form.fields_for :title do |t| %>
+                                <% if @user %>
+                                    <% @user.user_tags.each_with_index do |title, i| %>
+                                        <% if i == 0 %>
+                                            <div class="title test">
+                                                <%= t.radio_button :title_of_work, title.title_of_work,
+                                                        {   checked: true, id: "_title_tgl2_ru#{i}",
+                                                            class: "none-display"}%>
+                                                <%= t.label(:tgl2, title.title_of_work, value: "ru#{i}") %>
+                                            </div>
+                                        <% else %>
+                                            <div class="title test">
+                                                <%= t.radio_button :title_of_work, title.title_of_work,
+                                                        {   id: "_title_tgl2_ru#{i}",
+                                                            class: "none-display"}%>
+                                                <%= t.label(:tgl2, title.title_of_work, value: "ru#{i}") %>
+                                            </div>
+                                        <% end %>
+                                    <% end %>
+                                <% end%>
                                 <div class="title test">
                                     <%= t.text_field :title_of_work, class: 'form-text' %>
                                 </div>
-                            </div>
-                        <% end %>
+                            <% end %>
+                        </div>
 
-                        <%= form.fields_for :character do |c| %>
-                            <div class="characters testtest">
-                                <p>キャラクター名</p>
+                        <div class="characters testtest">
+                            <p>キャラクター名</p>
+                            <%= form.fields_for :character do |c| %>
+                                <% if @user %>
+                                    <% @user.user_tags.each_with_index do |character, i| %>
+                                        <% if i == 0 %>
+                                            <div class="character test">
+                                                <%= c.radio_button    :character_name, character.character_name,
+                                                        {   checked: true, id: "_character_tgl2_ru#{i}",
+                                                            class: "none-display"}%>
+                                                <%= c.label(:tgl2, character.character_name, value: "ru#{i}") %>
+                                            </div>
+                                        <% else %>
+                                            <div class="character test">
+                                                <%= c.radio_button    :character_name, character.character_name,
+                                                        {   id: "_character_tgl2_ru#{i}",
+                                                            class: "none-display"}%>
+                                                <%= c.label(:tg2, character.character_name, value: "ru#{i}") %>
+                                            </div>
+                                        <% end %>
+                                    <% end %>
+                                <% end %>
                                 <div class="character test">
                                     <%= c.text_field :character_name, class: 'form-text' %>
                                 </div>
-                            </div>
-                        <% end %>
+                            <% end %>
+                        </div>
                     </div>
-                <%= form.submit "仕分けru", class: "btn_prime" %>
-            </div>
-        <% end %>
+
+                    <%= form.submit "仕分けru", class: "btn_second" %>
+                </div>
+            <% end%>        
+
     </div>
 <% end %>
 
@@ -128,22 +168,22 @@
                                         <% if i == 0 %>
                                             <div class="title test">
                                                 <%= t.radio_button :title_of_work, title.title_of_work,
-                                                        {   checked: true, id: "_title_tgl_ru#{i}",
+                                                        {   checked: true, id: "_title_tgl2_ru#{i}",
                                                             class: "none-display"}%>
-                                                <%= t.label(:tgl, title.title_of_work, value: "ru#{i}") %>
+                                                <%= t.label(:tgl2, title.title_of_work, value: "ru#{i}") %>
                                             </div>
                                         <% else %>
                                             <div class="title test">
                                                 <%= t.radio_button :title_of_work, title.title_of_work,
-                                                        {   id: "_title_tgl_ru#{i}",
+                                                        {   id: "_title_tgl2_ru#{i}",
                                                             class: "none-display"}%>
-                                                <%= t.label(:tgl, title.title_of_work, value: "ru#{i}") %>
+                                                <%= t.label(:tgl2, title.title_of_work, value: "ru#{i}") %>
                                             </div>
                                         <% end %>
                                     <% end %>
                                 <% end%>
                                 <div class="title test">
-                                    <%= t.text_field :title_of_work, class: 'form-text' %>
+                                    <%= t.text_field :title_of_work_new, class: 'form-text' %>
                                 </div>
                             <% end %>
                         </div>
@@ -151,25 +191,27 @@
                         <div class="characters testtest">
                             <p>キャラクター名</p>
                             <%= form.fields_for :character do |c| %>
-                                <% @user.user_tags.each_with_index do |character, i| %>
-                                    <% if i == 0 %>
-                                        <div class="character test">
-                                            <%= c.radio_button    :character_name, character.character_name,
-                                                    {   checked: true, id: "_character_tgl_ru#{i}",
-                                                        class: "none-display"}%>
-                                            <%= c.label(:tgl, character.character_name, value: "ru#{i}") %>
-                                        </div>
-                                    <% else %>
-                                        <div class="character test">
-                                            <%= c.radio_button    :character_name, character.character_name,
-                                                    {   id: "_character_tgl_ru#{i}",
-                                                        class: "none-display"}%>
-                                            <%= c.label(:tgl, character.character_name, value: "ru#{i}") %>
-                                        </div>
+                                <% if @user %>
+                                    <% @user.user_tags.each_with_index do |character, i| %>
+                                        <% if i == 0 %>
+                                            <div class="character test">
+                                                <%= c.radio_button    :character_name, character.character_name,
+                                                        {   checked: true, id: "_character_tgl2_ru#{i}",
+                                                            class: "none-display"}%>
+                                                <%= c.label(:tgl2, character.character_name, value: "ru#{i}") %>
+                                            </div>
+                                        <% else %>
+                                            <div class="character test">
+                                                <%= c.radio_button    :character_name, character.character_name,
+                                                        {   id: "_character_tgl2_ru#{i}",
+                                                            class: "none-display"}%>
+                                                <%= c.label(:tgl2, character.character_name, value: "ru#{i}") %>
+                                            </div>
+                                        <% end %>
                                     <% end %>
                                 <% end %>
                                 <div class="character test">
-                                    <%= c.text_field :character_name, class: 'form-text' %>
+                                    <%= c.text_field :character_name_new, class: 'form-text' %>
                                 </div>
                             <% end %>
                         </div>

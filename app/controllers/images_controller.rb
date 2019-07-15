@@ -24,10 +24,9 @@ class ImagesController < ApplicationController
     #画像urlでない場合警告文返したい
     #画像urlでない場合saveしないこと
 
-    #既存image
-
     @user = current_user
 
+    #既存URL
     if params[:image_id]
       @alreadyImage = Image.find(params[:image_id])
 
@@ -47,46 +46,51 @@ class ImagesController < ApplicationController
 
   def record
     if image_params[:id]
+      p "img既存"
       image = Image.find(image_params[:id])
     else
-      #同時にnewimageとしてsortingに入ってた場合save済みになるかも
       if image = Image.find_by(url: image_params[:url])
-        p "既存かsorting中に誰か完了した"
+        p "img新規sorting中に誰か完了した"
       else
-        p "新規"
+        p "img新規"
         image = Image.new(image_params)
         image.save
       end
     end
 
     #tagは新規?既存?
+      #textareaへの入力は?
+      params[:title][:title_of_work] = params[:title][:title_of_work_new] if params[:title][:title_of_work_new].present?
+      params[:character][:character_name] = params[:character][:character_name_new] if params[:character][:character_name_new].present?
+
     if title = Title.find_by(title_of_work: for_title_params[:title_of_work])
-      p "既存?"
+      p "title既存?"
       p "関連済みでダブりは?"
       if image.image_titles.find_by(title_id: title.id)
-        p "ダブってるからcreate無し"
+        p "titleダブってるからcreate無し"
       else
         p "無いからcreate"
         image.image_titles.create(title_id: title.id)
       end
     else
-      p "新規"
+      p "title新規"
       title = Title.new(for_title_params)
       title.save
       image.image_titles.create(title_id: title.id)
     end
 
+
     if character = Character.find_by(character_name: for_character_params[:character_name])
-      p "既存?"
+      p "chara既存?"
       p "関連済みでダブりは?"
       if image.image_characters.find_by(character_id: character.id)
-        p "ダブってるからcreate無し"
+        p "charaダブってるからcreate無し"
       else
         p "無いからcreate"
         image.image_characters.create(character_id: character.id)
       end
     else
-      p "新規"
+      p "chara新規"
       character = Character.new(for_character_params)
       character.save
       image.image_characters.create(character_id: character.id)
@@ -95,44 +99,37 @@ class ImagesController < ApplicationController
 
     #DL未完
 
-       # ready filepath
-       require "open-uri"
-       require "fileutils"
-   
-       fileName = File.basename(image.url)
-       dirName = Rails.root.join("app/assets/images/test/hoge/#{title.title_of_work}/#{character.character_name}/")
-       filePath = dirName + fileName
-   
-       p fileName
-       p dirName
-       p filePath
-   
-       #dir無かったら作成する
-       FileUtils.mkdir_p(dirName) unless FileTest.exist?(dirName)
-   
-       #ひとまずrails内には保存出来た
-       open(filePath, 'wb') do |output|
-         open(image.url) do |data|
-           output.write(data.read)
-         end
-       end
-   
-       redirect_to test_path(image_url: image.url,
-                                        title_of_work: title.title_of_work,
-                                        character_name: character.character_name)
-  end
+    # ready filepath
+    require "open-uri"
+    require "fileutils"
 
-  def success
-    @image_url = params[:image_url]
-    @title_of_work =  params[:title_of_work]
-    @character_name = params[:character_name]
+    fileName = File.basename(image.url)
+    dirName = Rails.root.join("app/assets/images/test/hoge/#{title.title_of_work}/#{character.character_name}/")
+    filePath = dirName + fileName
+
+    p fileName
+    p dirName
+    p filePath
+
+    #dir無かったら作成する
+    FileUtils.mkdir_p(dirName) unless FileTest.exist?(dirName)
+    open(filePath, 'wb') do |output|
+      open(image.url) do |data|
+        output.write(data.read)
+      end
+    end
+
+    redirect_to test_path(image_url: image.url,
+                                    title_of_work: title.title_of_work,
+                                    character_name: character.character_name)
   end
 
   def ssend
     require "open-uri"
 
     image_url = params[:image_url]
-    file_name = "#{params[:title_of_work]}-#{params[:character_name]}"
+    base_name = File.basename(image_url)
+    file_name = "#{params[:title_of_work]}-#{params[:character_name]}-#{base_name}"
 
     send_file(open(image_url), filename: file_name)
   end

@@ -1,14 +1,76 @@
- <div class="firstview">
-    <div class="backs">
-        <h1 class="back"><%= @user.name %> さん</h1>
-    </div>
+ <div class="quietview">
+    <h1><%= @user.name %> さん</h1>
 
     <p>仕分けruの設定</p>
-        作品名とキャラクター名
-        <% @user.user_tags.each do |tag|%>
-            <%= tag.title_of_work%>
-            <%= tag.character_name%>
-        <% end %>
+
+    <div class="preview">
+r
+        <p>プレビュー</p>
+            <%= form_with(url: record_path) do |form| %>
+
+                    <div class="tag_frame_second">
+                        <div class="sorting_tag">
+                            <div class="titles testtest">
+                                <p>作品名</p>
+                                <%= form.fields_for :title do |t| %>
+                                    <% if @user %>
+                                        <% @user.user_tags.each_with_index do |title, i| %>
+                                            <% if i == 0 %>
+                                                <div class="title test">
+                                                    <%= t.radio_button :title_of_work, title.title_of_work,
+                                                            {   checked: true, id: "_title_tgl2_ru#{i}",
+                                                                class: "none-display"}%>
+                                                    <%= t.label(:tgl2, title.title_of_work, value: "ru#{i}") %>
+                                                </div>
+                                            <% else %>
+                                                <div class="title test">
+                                                    <%= t.radio_button :title_of_work, title.title_of_work,
+                                                            {   id: "_title_tgl2_ru#{i}",
+                                                                class: "none-display"}%>
+                                                    <%= t.label(:tgl2, title.title_of_work, value: "ru#{i}") %>
+                                                </div>
+                                            <% end %>
+                                        <% end %>
+                                    <% end%>
+                                    <div class="title test">
+                                        <%= t.text_field :title_of_work_new, class: 'form-text' %>
+                                    </div>
+                                <% end %>
+                            </div>
+
+                            <div class="characters testtest">
+                                <p>キャラクター名</p>
+                                <%= form.fields_for :character do |c| %>
+                                    <% if @user %>
+                                        <% @user.user_tags.each_with_index do |character, i| %>
+                                            <% if i == 0 %>
+                                                <div class="character test">
+                                                    <%= c.radio_button    :character_name, character.character_name,
+                                                            {   checked: true, id: "_character_tgl2_ru#{i}",
+                                                                class: "none-display"}%>
+                                                    <%= c.label(:tgl2, character.character_name, value: "ru#{i}") %>
+                                                </div>
+                                            <% else %>
+                                                <div class="character test">
+                                                    <%= c.radio_button    :character_name, character.character_name,
+                                                            {   id: "_character_tgl2_ru#{i}",
+                                                                class: "none-display"}%>
+                                                    <%= c.label(:tgl2, character.character_name, value: "ru#{i}") %>
+                                                </div>
+                                            <% end %>
+                                        <% end %>
+                                    <% end %>
+                                    <div class="character test">
+                                        <%= c.text_field :character_name_new, class: 'form-text' %>
+                                    </div>
+                                <% end %>
+                            </div>
+                        </div>
+
+                        <%= form.submit "仕分けru", class: "btn_second" %>
+                    </div>
+                <% end%>
+        </div>
 
         <%= form_with(url: "/tagset/#{@user.id}") do |form| %>
             <%= form.text_field :title_of_work %>
@@ -17,6 +79,6 @@
             <%= form.submit "作成", class: "btn" %>
         <% end %>
 
-    仕分けた画像一覧
+    仕分けた画像履歴
     <%= link_to '> アカウント設定', edit_user_path(current_user) %>
 </div>

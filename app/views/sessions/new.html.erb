@@ -1,6 +1,7 @@
-<h1>ログイン</h1>
+<div class="form_area">
 
-<div class="form">
+    <h1>ログイン</h1>
+
     <%= form_for(:session, url: login_path) do |f| %>
 
         <%= f.label :email %>
@@ -14,8 +15,7 @@
             <span>Remember me on this computer</span>
         <% end %>
 
-        <%= f.submit "Log in", class: "btn btn-primary" %>
+        <%= f.submit "Log in", class: "btn_prime" %>
     <% end %>
 
-    <p>New user? <%= link_to "Sign up now!", signup_path %></p>
-</div>
+    <%= link_to "ユーザー登録はこちら", signup_path %>

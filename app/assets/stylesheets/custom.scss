@@ -1,22 +1,40 @@
+// color
+
+//視点誘導なしの部品。文字の背景色 。
+$black0: #000000;
+
+$white0: #ffffff;
+
+//文字の基本色
+$white1: #cccccc;
+
 a {
-    color: #cccccc;
+    color: $white1;
     text-decoration: none;
+}
+
+h1 {
+    color: $white0;
+}
+.header {
+    width: 100%;
+    background-color: $black0;
+    border-bottom: solid 1px $white1;
 }
 
 .header-bar {
     display: flex;
     height: 30px;
+    max-width: 1024px;
     justify-content: space-between;
     align-items: center;
-    padding-left: 5%;
-    background-color: #000000;
-    border-bottom: solid 1px #cccccc;
+    margin: 0 auto;
 }
 
 .header-bar_logo {
     font-size: 20px;
     white-space: nowrap;
-    color: #cccccc;
+    color: $white1;
     text-decoration: none;
 }
 
@@ -25,14 +43,13 @@ a {
     li a {
         padding: 3px 10px 3px 10px;
         margin-right: 10px;
-        color: #cccccc;
+        color: $white1;
         text-decoration: none;
     }
 }
 
 .searcher {
     padding-top: 20px; 
-    padding-bottom: 15px;
     font-size: 0;
     .normal {
         width: 50%;
@@ -49,7 +66,7 @@ a {
     .btn_serch {
         height: 30px;
         box-sizing: border-box;
-        color: #cccccc;
+        color: $white1;
         background: #4a4a4a;
         border-top: 2px solid #656565;
         border-right: 2px solid #656565;
@@ -59,6 +76,46 @@ a {
 }
 
 .main_wrap {
-    max-width: 800px;
-    padding-left: 5%;
+    max-width: 1024px;
+    margin: 0 auto;
+}
+
+.btn_prime {
+    display: block;
+    max-width: 180px;
+    border: 2px solid #6a6a6a;
+    font-size: 16px;
+    color: #FFFFFF;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 8px 16px;
+    margin: auto;
+    border-radius: 4px;
+    transition: .4s;
+    background-color: #fd7e00;
+}
+  .btn_prime:hover {
+    background-color: #2c2c2c;
+    border-color: #e5e5e5;
+    color: #FFFFFF;
+}
+
+.btn_second {
+    display: block;
+    max-width: 180px;
+    border: 2px solid $black0;
+    font-size: 16px;
+    color: $white1;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 8px 16px;
+    margin: auto;
+    border-radius: 4px;
+    transition: .4s;
+    background-color: #000080;
+}
+  .btn_second:hover {
+    background-color: #2c2c2c;
+    border-color: #e5e5e5;
+    color: #FFFFFF;
 }
