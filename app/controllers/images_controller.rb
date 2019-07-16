@@ -8,6 +8,7 @@ class ImagesController < ApplicationController
 
   def serach
     image_url = image_params[:url]
+
     #imageが新規か既存か分ける
     #@image_urlはDBに存在?
     alreadyImage = Image.find_by(url: image_url)
