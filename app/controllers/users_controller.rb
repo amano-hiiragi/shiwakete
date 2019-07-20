@@ -21,6 +21,11 @@ class UsersController < ApplicationController
       redirect_to @user
     else
       render 'new'
+      if @user.errors
+        p "test"
+      else
+        p "hate"
+      end
     end
   end
 
@@ -46,7 +51,17 @@ class UsersController < ApplicationController
     p @user
     @user.user_tags.create( title_of_work: params[:title_of_work],
                             character_name: params[:character_name])
-    render 'show'
+    redirect_to @user
+  end
+
+  def tagdestroy
+    UserTag.find(params[:id]).destroy
+    flash[:success] = "deleted"
+    redirect_to current_user
+  end
+
+  def images
+    @user = User.find(params[:id])
   end
 
   private

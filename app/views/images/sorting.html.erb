@@ -1,5 +1,5 @@
 <% provide(:seracher_type, 'background') %>
-<% provide(:seracher_url, 'url')%>
+<% provide(:seracher_url, @url)%>
 <%= render 'seracher' %>
 
 <% if @newImage %>
@@ -60,7 +60,7 @@
                                                 <%= c.radio_button    :character_name, character.character_name,
                                                         {   id: "_character_tgl2_ru#{i}",
                                                             class: "none-display"}%>
-                                                <%= c.label(:tg2, character.character_name, value: "ru#{i}") %>
+                                                <%= c.label(:tgl2, character.character_name, value: "ru#{i}") %>
                                             </div>
                                         <% end %>
                                     <% end %>

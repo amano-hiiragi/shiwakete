@@ -5,16 +5,19 @@
         
         <div class="form_item">
             <p>表示名</p>
+            <%= f.label :name %>
             <%= f.text_field :name %>
         </div>
 
         <div class="form_item">
             <p>メールアドレス</p>
+            <%= f.label :email %>
             <%= f.email_field :email %>
         </div>
 
         <div class="form_item">
             <p>パスワード</p>
+            <%= f.label :password %>
             <%= f.password_field :password %>
         </div>
 

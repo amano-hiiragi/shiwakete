@@ -3,7 +3,7 @@
         <h1><%= @user.name %> さん</h1>
     </div>
 
-
+    <%= link_to 'アカウント設定', edit_user_path(current_user) %>
 
     <div class="viewtest">
     
@@ -14,20 +14,13 @@
         </ul>
 
         <div class="setting">
-            <%= form_for(@user) do |f| %>
-                <%= render 'shared/error_messages' %>
-
-                <%= f.label :name %>
-                <%= f.text_field :name, class: 'form-control' %>
-
-                <%= f.label :email %>
-                <%= f.email_field :email, class: 'form-control' %>
-
-                <%= f.label :password %>
-                <%= f.password_field :password, class: 'form-control' %>
-
-                <%= f.submit "保存", class: "btn btn-primary" %>
-            <% end %>
+            <div class="user_image-list">
+                <% if @user %>
+                    <% @user.images.each do |image|%>
+                        <%= image_tag image.url %>
+                    <% end %>
+                <% end %>
+            </div>
         </div>
     </div>
 </div>

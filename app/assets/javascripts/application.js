@@ -13,3 +13,12 @@
 //= require rails-ujs
 //= require turbolinks
 //= require_tree .
+
+
+'use strict';
+
+window.onload = function(){
+    document.getElementById('target').addEventListener('click', function() {
+        document.getElementById('target').classList.toggle('circle');
+});
+};

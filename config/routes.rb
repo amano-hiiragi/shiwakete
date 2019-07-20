@@ -3,20 +3,17 @@ Rails.application.routes.draw do
   get    '/signup',  to: 'users#new'
   get    '/login',   to: 'sessions#new'
   post   '/login',   to: 'sessions#create'
-  delete '/logout',  to: 'sessions#destroy'
+  delete  '/logout',  to: 'sessions#destroy'
 
-  #作成中
-  post    '/serach',     to: 'images#serach'
-  get     '/sorting',    to: 'images#sorting'
-
-  post    '/record', to: 'images#record'
-
+  post    '/serach',      to: 'images#serach'
+  get     '/sorting',     to: 'images#sorting'
+  post    '/record',      to: 'images#record'
   get     '/test',        to: 'images#ssend'
 
-  #作成予定
   post    '/tagset/:id',     to: 'users#tagset'
+  delete  '/tagset/:id/destroy',  to: 'users#tagdestroy'
 
-  get     '/images/success', to: 'images#success'
+  get     '/users/:id/images',  to: 'users#images'
 
   resources :users
   resources :account_activations, only: [:edit]

@@ -1,5 +1,6 @@
 <% provide(:seracher_type, 'normal') %>
 <%= render 'seracher' %>
+<%= flash[:noimage] %>
 
 <div class="quietview">
     <div class="instructions">
@@ -9,6 +10,11 @@
     <p>ネット上の画像ファイルを誰かの変換履歴を利用して自動でファイル整理する</p>
     <p>RT,いいねされ辛いR-18系を別サイトなら拡散するかなって</p>
     <p>テストURL:https://pbs.twimg.com/media/D-5Y18qU0AAPIHA.jpg</p>
+
+    javascript-test
+
+    <div id="target" class="box"></div>
+
     <br>
     <br>
         <h1>使い方</h1>

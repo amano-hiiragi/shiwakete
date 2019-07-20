@@ -4,21 +4,33 @@ class ImagesController < ApplicationController
   #
 
   def top
+    p flash
   end
 
   def serach
     image_url = image_params[:url]
 
-    #imageが新規か既存か分ける
-    #@image_urlはDBに存在?
-    alreadyImage = Image.find_by(url: image_url)
-    if alreadyImage
-      p "する   = 既存image"
-      redirect_to sorting_path(image_id: alreadyImage)
+    #img_urlの場合
+    if image_url.match(/.(jpg|jpeg|png|gif|bmp)/)
+      alreadyImage = Image.find_by(url: image_url)
+      if alreadyImage
+        p "する   = 既存image"
+        redirect_to sorting_path(image_id: alreadyImage, url: image_url)
+      else
+        p "しない = 新規image"
+        redirect_to sorting_path(new_image_url: image_url, url: image_url)
+      end
+
+    #img以外の場合警告
     else
-      p "しない = 新規image"
-      redirect_to sorting_path(new_image_url: image_url)
+      flash[:noimage] = 'url非対応'
+      p flash
+      redirect_to root_path
+      p flash[:noimage]
     end
+
+
+
   end
 
   def sorting
@@ -43,6 +55,10 @@ class ImagesController < ApplicationController
     if params[:new_image_url]
       @newImage = Image.new(url: params[:new_image_url])
     end
+
+    #sercher表示用
+    @url = params[:url]
+
   end
 
   def record
@@ -118,6 +134,12 @@ class ImagesController < ApplicationController
       open(image.url) do |data|
         output.write(data.read)
       end
+    end
+
+    if current_user
+      current_user.sortings.create(image_id: image.id,
+                                    title_id: title.id,
+                                    character_id: character.id)
     end
 
     redirect_to test_path(image_url: image.url,

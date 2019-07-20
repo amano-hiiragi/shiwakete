@@ -1,3 +1,19 @@
+// test
+.box {
+    display: block;
+    height: 100px;
+    width: 100px;
+    background: #fd7e00;
+    cursor: pointer;
+    transition: 4s;
+}
+
+.circle {
+    background: #FFFFFF;
+    border-radius: 50%;
+    transform: rotate(360deg);
+}
+
 // color
 
 //視点誘導なしの部品。文字の背景色 。

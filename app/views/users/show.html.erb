@@ -1,84 +1,32 @@
  <div class="quietview">
-    <h1><%= @user.name %> さん</h1>
+    <div class="name-plate">
+        <h1><%= @user.name %> さん</h1>
+    </div>
 
-    <p>仕分けruの設定</p>
+    <div class="viewtest">
+    
+        <ul class="setting-list">
+            <li><%= link_to '仕分けruの設定', user_path(current_user) %></li>
+            <li><%= link_to '疑似ディレクトリ予定', "/users/#{params[:id]}/images" %></li>
+            <li><%= link_to 'アカウント設定', edit_user_path(current_user) %></li>
+        </ul>
 
-    <div class="preview">
-r
-        <p>プレビュー</p>
-            <%= form_with(url: record_path) do |form| %>
+        <div class="setting">
+            <p>リスト</p>
+            <% if @user.user_tags %>
+                <% @user.user_tags.each do |tag|%>
+                    <div class="tag"><%= tag.title_of_work %><%= tag.character_name %>
+                    <%= link_to "削除", "/tagset/#{tag.id}/destroy", method: :delete,
+                                  data: { confirm: "You sure?" } %></div>
+                <% end %>
+            <% end %>
 
-                    <div class="tag_frame_second">
-                        <div class="sorting_tag">
-                            <div class="titles testtest">
-                                <p>作品名</p>
-                                <%= form.fields_for :title do |t| %>
-                                    <% if @user %>
-                                        <% @user.user_tags.each_with_index do |title, i| %>
-                                            <% if i == 0 %>
-                                                <div class="title test">
-                                                    <%= t.radio_button :title_of_work, title.title_of_work,
-                                                            {   checked: true, id: "_title_tgl2_ru#{i}",
-                                                                class: "none-display"}%>
-                                                    <%= t.label(:tgl2, title.title_of_work, value: "ru#{i}") %>
-                                                </div>
-                                            <% else %>
-                                                <div class="title test">
-                                                    <%= t.radio_button :title_of_work, title.title_of_work,
-                                                            {   id: "_title_tgl2_ru#{i}",
-                                                                class: "none-display"}%>
-                                                    <%= t.label(:tgl2, title.title_of_work, value: "ru#{i}") %>
-                                                </div>
-                                            <% end %>
-                                        <% end %>
-                                    <% end%>
-                                    <div class="title test">
-                                        <%= t.text_field :title_of_work_new, class: 'form-text' %>
-                                    </div>
-                                <% end %>
-                            </div>
+            <%= form_with(url: "/tagset/#{@user.id}") do |form| %>
+                <%= form.text_field :title_of_work %>
+                <%= form.text_field :character_name %>
 
-                            <div class="characters testtest">
-                                <p>キャラクター名</p>
-                                <%= form.fields_for :character do |c| %>
-                                    <% if @user %>
-                                        <% @user.user_tags.each_with_index do |character, i| %>
-                                            <% if i == 0 %>
-                                                <div class="character test">
-                                                    <%= c.radio_button    :character_name, character.character_name,
-                                                            {   checked: true, id: "_character_tgl2_ru#{i}",
-                                                                class: "none-display"}%>
-                                                    <%= c.label(:tgl2, character.character_name, value: "ru#{i}") %>
-                                                </div>
-                                            <% else %>
-                                                <div class="character test">
-                                                    <%= c.radio_button    :character_name, character.character_name,
-                                                            {   id: "_character_tgl2_ru#{i}",
-                                                                class: "none-display"}%>
-                                                    <%= c.label(:tgl2, character.character_name, value: "ru#{i}") %>
-                                                </div>
-                                            <% end %>
-                                        <% end %>
-                                    <% end %>
-                                    <div class="character test">
-                                        <%= c.text_field :character_name_new, class: 'form-text' %>
-                                    </div>
-                                <% end %>
-                            </div>
-                        </div>
-
-                        <%= form.submit "仕分けru", class: "btn_second" %>
-                    </div>
-                <% end%>
+                <%= form.submit "新規作成", class: "btn" %>
+            <% end %>
         </div>
-
-        <%= form_with(url: "/tagset/#{@user.id}") do |form| %>
-            <%= form.text_field :title_of_work %>
-            <%= form.text_field :character_name %>
-
-            <%= form.submit "作成", class: "btn" %>
-        <% end %>
-
-    仕分けた画像履歴
-    <%= link_to '> アカウント設定', edit_user_path(current_user) %>
+    </div>
 </div>
